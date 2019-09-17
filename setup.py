@@ -10,7 +10,5 @@ setup(
      license = 'MIT',
      zip_safe = False,
      packages=['igenemy'],
-     dependency_links = ['https://pypi.org/project/selenium/', 'https://pypi.org/project/bs4/',
-                        'https://pypi.org/project/ipython/'],
      python_requires = '>= 3'
  )
