@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import time
@@ -135,8 +129,8 @@ class Igenemy:
     def __init__(self, target = [], target_is_hashtag = False, chromedriver_path = './chromedriver', 
                  save_to_path = '.', chromedriver_autoquit = True, chrome_headless = True, save_img = True,
                  save_video = False, enable_gpu = False, ipython_display_image = False):
-        if type(target) != list:
-            raise ValueError('"target" must be a list')
+        if type(target) != list or len(target) == 0:
+            raise ValueError('"target" must be a list and at least contains 1 target')
         else:
             self.target = target
             
@@ -340,6 +334,8 @@ class Igenemy:
                 - if this number is beyond the actual number of posts, it will stop scrapping automatically
                 
         """
+        if type(num_post) != int:
+            raise ValueError("'num_post' must be an integer")
         all_target = []
         for t in self.target: #loop thru each url
             if self.target_is_hashtag:
@@ -549,4 +545,3 @@ class Igenemy:
             print('\nChromedriver is Closed')
         except:
             print('\nChromedriver is Closed')
-
