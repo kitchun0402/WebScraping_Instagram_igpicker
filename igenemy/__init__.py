@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import time
@@ -206,6 +212,7 @@ class Igenemy:
         else:
             print("\n[Failed]")
             chrome_driver.quit()
+            print('\nChromedriver is Closed')
    
         if login_check == True:
             sc_check = self.security_code(chrome_driver)
@@ -315,6 +322,7 @@ class Igenemy:
             else:
                 print("\n[Failed]")
                 chrome_driver.quit()
+                print('\nChromedriver is Closed')
 
         except:
             print('\n[Successfully Login!]')
@@ -532,6 +540,7 @@ class Igenemy:
             
         if self.chromedriver_autoquit: #auto close
             chrome_driver.quit()
+            print('\nChromedriver is Closed')
         return all_target
     
     def close_driver(self, chrome_driver): #manually close
@@ -540,3 +549,4 @@ class Igenemy:
             print('\nChromedriver is Closed')
         except:
             print('\nChromedriver is Closed')
+
