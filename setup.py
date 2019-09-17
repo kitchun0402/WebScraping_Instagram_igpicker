@@ -3,7 +3,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
      name='igenemy',  
-     version='0.1',
+     version='0.2',
      scripts=['igenemy'] ,
      author="Kenneth Hau",
      author_email="kitchun0402@gmail.com",
