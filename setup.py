@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
      name='igenemy',  
@@ -8,6 +8,6 @@ setup(
      description="WebScraping_Instagram",
      url="https://github.com/kitchun0402/WebScraping_Instagram_igenemy",
      license = 'MIT',
-     packages=['igenemy'],
-     zip_safe = False
+     zip_safe = False,
+     packages=setuptools.find_packages()
  )
