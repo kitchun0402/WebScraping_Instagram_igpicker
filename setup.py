@@ -1,5 +1,4 @@
 from setuptools import setup
-import setuptools
 
 setup(
      name='igenemy',  
@@ -10,5 +9,5 @@ setup(
      url="https://github.com/kitchun0402/WebScraping_Instagram_igenemy",
      license = 'MIT',
      zip_safe = False,
-     packages=setuptools.find_packages()
+     packages=['funniest']
  )
