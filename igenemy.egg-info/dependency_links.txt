@@ -1,0 +1,3 @@
+https://pypi.org/project/selenium/
+https://pypi.org/project/bs4/
+https://pypi.org/project/ipython/
