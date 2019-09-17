@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
      name='igenemy',  
-     version='0.2',
+     version='0.1',
      author="Kenneth Hau",
      author_email="kitchun0402@gmail.com",
      description="WebScraping_Instagram",
