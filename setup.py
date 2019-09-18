@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='igenemy',  
-    version='0.2.1',
+    version='0.2',
     author="Kenneth Hau",
     author_email="kitchun0402@gmail.com",
     description="WebScraping_Instagram",
