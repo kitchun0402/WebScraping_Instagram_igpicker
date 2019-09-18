@@ -5,7 +5,6 @@ from getpass import getpass
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from IPython.display import Image
-from IPython.display import Video
 from urllib.request import urlretrieve
 import os
 import re
