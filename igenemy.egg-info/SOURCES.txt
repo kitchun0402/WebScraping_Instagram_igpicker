@@ -5,4 +5,5 @@ igenemy.egg-info/PKG-INFO
 igenemy.egg-info/SOURCES.txt
 igenemy.egg-info/dependency_links.txt
 igenemy.egg-info/not-zip-safe
+igenemy.egg-info/requires.txt
 igenemy.egg-info/top_level.txt
