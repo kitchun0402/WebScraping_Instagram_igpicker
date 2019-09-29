@@ -95,6 +95,7 @@ Date for record: 29th September 2019 by Kenneth Hau
 
     --> Example 1 (Normal flow):
     
+    from igenemy import Igenemy
     igenemy = Igenemy(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag = False, chromedriver_path= './chromedriver',
                   save_to_path = './', chromedriver_autoquit = False,
                   chrome_headless= True, save_img=True, save_video=False, enable_gpu = False, 
