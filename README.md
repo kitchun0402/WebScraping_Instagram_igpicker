@@ -1,6 +1,16 @@
-# WebScraping_Instagram_igenemy
-Date for record: 16th September 2019 by Kenneth Hau
+# WebScraping_Instagram_igenemy   
+Date for record: 29th September 2019 by Kenneth Hau
+
+    Updated: It's now available on Google Colab. 
     
+    Please follow below instruction to install chrome driver on Colab:
+    --> !apt install chromium-chromedriver
+    --> !cp /usr/lib/chromium-browser/chromedriver /usr/bin
+    --> !pip install selenium
+    --> set the parameter chromedriver_path = 'chromedriver'
+    --> set the parameter chrome_headless = True
+
+    ---------
     This is used to scrape images / videos from Instagam by using chrome driver.
     
     By setting those parameters, you can easily scrape either images or videos or both as well as select your designated path to save them.
@@ -81,7 +91,9 @@ Date for record: 16th September 2019 by Kenneth Hau
             - manually close the web driver
     
     ---------
-    Example 1 (Normal flow):
+    --> from igenemy import Igenemy
+
+    --> Example 1 (Normal flow):
     
     igenemy = Igenemy(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag = False, chromedriver_path= './chromedriver',
                   save_to_path = './', chromedriver_autoquit = False,
@@ -95,7 +107,7 @@ Date for record: 16th September 2019 by Kenneth Hau
     igenemy.close_driver(chrome_driver) #manually close if 'chromedriver_autoquit' is False
     
 
-    Example 2 (Change attributes):
+    --> Example 2 (Change attributes):
     
     igenemy.save_to_path = '../' #change path
     
@@ -110,4 +122,3 @@ Date for record: 16th September 2019 by Kenneth Hau
     all_target = igenemy.scraper(chrome_driver = chrome_driver, num_post = 10) 
     
     #you can run 'scraper' again after you change the parameters if you didn't close the chrome driver.
-    
