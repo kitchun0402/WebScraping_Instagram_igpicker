@@ -5,15 +5,23 @@ from getpass import getpass
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from IPython.display import Image
-from IPython.display import Video
 from urllib.request import urlretrieve
 import os
 import re
 
 class Igenemy:
     '''
-    Date for record: 16th September 2019 by Kenneth Hau
+    Date for record: 29th September 2019 by Kenneth Hau
+
+    Updated: It's now available on Google Colab. 
     
+    Please follow below instruction to install chrome driver on Colab:
+    --> !apt install chromium-chromedriver
+    --> !cp /usr/lib/chromium-browser/chromedriver /usr/bin
+    --> set the parameter chromedriver_path = 'chromedriver'
+    --> set the parameter chrome_headless = True
+
+    ---------
     This is used to scrape images / videos from Instagam by using chrome driver.
     
     By setting those parameters, you can easily scrape either images or videos or both as well as select your designated path to save them.
@@ -94,7 +102,9 @@ class Igenemy:
             - manually close the web driver
     
     ---------
-    Example 1 (Normal flow):
+    --> from igenemy import Igenemy
+
+    --> Example 1 (Normal flow):
     
     igenemy = Igenemy(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag = False, chromedriver_path= './chromedriver',
                   save_to_path = './', chromedriver_autoquit = False,
@@ -108,7 +118,7 @@ class Igenemy:
     igenemy.close_driver(chrome_driver) #manually close if 'chromedriver_autoquit' is False
     
 
-    Example 2 (Change attributes):
+    --> Example 2 (Change attributes):
     
     igenemy.save_to_path = '../' #change path
     
@@ -134,10 +144,7 @@ class Igenemy:
         else:
             self.target = target
             
-        if  not os.path.exists(chromedriver_path) or re.search(r'chromedriver$', 'chromedriver_path'):
-            raise FileNotFoundError('"chromedriver_path" is a invalid path, e.g "./chromedriver"')
-        else:
-            self.chromedriver_path = chromedriver_path
+        self.chromedriver_path = chromedriver_path
         
         if type(target_is_hashtag) != bool:
             raise ValueError('"target_is_hashtag" must be a boolean')
@@ -222,6 +229,9 @@ class Igenemy:
         if self.chrome_headless:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
+            chrome_options.add_argument('-no-sandbox')
+            chrome_options.add_argument('–disable-dev-shm-usage')
+            
             if self.enable_gpu:
                 chrome_options.add_argument('disable--gpu')
             print('[Chrome Driver is now in headless mode]\n')
