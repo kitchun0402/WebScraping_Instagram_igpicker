@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='igenemy',  
-    version='0.3.1',
+    version='0.3.2',
     author="Kenneth Hau",
     author_email="kitchun0402@gmail.com",
     description="WebScraping_Instagram",
@@ -12,7 +12,7 @@ setup(
     license = 'MIT',
     zip_safe = False,
     packages=['igenemy'],
-    install_requires = ['selenium', 'bs4', 'ipython'],
+    install_requires = ['selenium>=3.141.0', 'bs4>=0.0.1', 'ipython>=7.8.0', 'wget>=3.2'],
     python_requires = '>= 3',
     long_description=long_description,
     long_description_content_type="text/markdown"

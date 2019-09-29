@@ -1,3 +1,4 @@
-selenium
-bs4
-ipython
+selenium>=3.141.0
+bs4>=0.0.1
+ipython>=7.8.0
+wget>=3.2

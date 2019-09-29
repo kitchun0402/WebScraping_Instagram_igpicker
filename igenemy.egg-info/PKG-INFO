@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: igenemy
-Version: 0.3.1
+Version: 0.3.2
 Summary: WebScraping_Instagram
 Home-page: https://github.com/kitchun0402/WebScraping_Instagram_igenemy
 Author: Kenneth Hau
@@ -103,6 +103,7 @@ Description: # WebScraping_Instagram_igenemy
         
             --> Example 1 (Normal flow):
             
+            from igenemy import Igenemy
             igenemy = Igenemy(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag = False, chromedriver_path= './chromedriver',
                           save_to_path = './', chromedriver_autoquit = False,
                           chrome_headless= True, save_img=True, save_video=False, enable_gpu = False, 

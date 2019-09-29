@@ -4,10 +4,15 @@ import time
 from getpass import getpass
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from IPython.display import Image
-from urllib.request import urlretrieve
+# from urllib.request import urlretrieve
 import os
 import re
+import wget
+import ssl
 
 class Igenemy:
     '''
@@ -18,6 +23,7 @@ class Igenemy:
     Please follow below instruction to install chrome driver on Colab:
     --> !apt install chromium-chromedriver
     --> !cp /usr/lib/chromium-browser/chromedriver /usr/bin
+    --> !pip install selenium
     --> set the parameter chromedriver_path = 'chromedriver'
     --> set the parameter chrome_headless = True
 
@@ -344,6 +350,7 @@ class Igenemy:
                 - if this number is beyond the actual number of posts, it will stop scrapping automatically
                 
         """
+        ssl._create_default_https_context = ssl._create_unverified_context
         if type(num_post) != int:
             raise ValueError("'num_post' must be an integer")
         all_target = []
@@ -364,7 +371,9 @@ class Igenemy:
             checker = []
             start_post = 1
             while True:
+                WebDriverWait(chrome_driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.Nnq7C div.v1Nh3.kIKUG._bz0w div._9AhH0')))
                 posts = chrome_driver.find_elements_by_css_selector('.Nnq7C div.v1Nh3.kIKUG._bz0w div._9AhH0') #(find the frame) return a list, show each post
+                
                 end_post = len(posts)
                 print(f'\n-------------\n[Target: {t}]\n-------------\n')
                 time.sleep(1)
@@ -387,9 +396,10 @@ class Igenemy:
                                 checker.append(posts[post])
                                 trigger = False
                             except:
-                                print(f'failed {repeater + 1}\n-------------')
+                                print(f'Try Again [{repeater + 1}]\n-------------')
                                 repeater += 1
                                 if repeater == 3:
+                                    print('Failed\n-------------')
                                     break
                                 time.sleep(0.3)
                                 html_changed = chrome_driver.page_source #load the page source again
@@ -411,10 +421,11 @@ class Igenemy:
                             print(posttime)
                             trigger = False
                         except:
-                            print(f'failed {repeater + 1}\n-------------')
+                            print(f'Try Again [{repeater + 1}]\n-------------')
                             repeater += 1
                             if repeater == 3:
                                 posttime = 'na'
+                                print('Saved posting time to na\n-------------')
                                 break
                             time.sleep(0.5)
                             html_changed = chrome_driver.page_source #load the page source again
@@ -443,7 +454,7 @@ class Igenemy:
                                         img_url = soup_changed.select('._97aPb .YlNGR li')[pic].find("img")['src']
                                         if self.ipython_display_image:
                                             display(Image(url = img_url,  width = 100))
-                                        urlretrieve(img_url, f'{self.save_to_path}/{t}/{posttime}_{pic}.jpg')
+                                        wget.download(img_url, f'{self.save_to_path}/{t}/{posttime}_{pic}.jpg')
                                     else:
                                         print('\n[Skipped]\n')
                                         continue
@@ -460,7 +471,7 @@ class Igenemy:
                                                 print('\nNo url')
                                             else:
                                                 print(video_url)
-                                                urlretrieve(video_url, f'{self.save_to_path}/{t}/{posttime}_{pic}.mp4')
+                                                wget.download(video_url, f'{self.save_to_path}/{t}/{posttime}_{pic}.mp4')
                                                 break
 
 
@@ -481,15 +492,16 @@ class Igenemy:
                                         result = soup_changed.select('.PdwC2._6oveC.Z_y-9 .KL4Bh img.FFVAD')[0] #only 1 pic there
                                         if self.ipython_display_image:
                                             display(Image(url = result['src'], width = 100))#show the image
-                                        urlretrieve(result['src'], f'{self.save_to_path}/{t}/{posttime}.jpg') #save the image into jpg format
+                                        wget.download(result['src'], f'{self.save_to_path}/{t}/{posttime}.jpg') #save the image into jpg format
                                         trigger = False
                                     else:
                                         print('\n[Skipped]\n')
                                         break
                                 except:
-                                    print(f'failed {repeater + 1}\n-------------')
+                                    print(f'Try Again [{repeater + 1}]\n-------------')
                                     repeater += 1
                                     if repeater == 3:
+                                        print('Failed\n-------------')
                                         break
                                     time.sleep(0.5)
                                     html_changed = chrome_driver.page_source #load the page source again
@@ -501,7 +513,7 @@ class Igenemy:
                             if self.save_video:
                                 result = soup_changed.select('.PdwC2._6oveC.Z_y-9 ._5wCQW video')[0]['src']
                                 print(result)
-                                urlretrieve(result, f'{self.save_to_path}/{t}/{posttime}.mp4')
+                                wget.download(result, f'{self.save_to_path}/{t}/{posttime}.mp4')
     #                             time.sleep(0.3)
 
 
@@ -513,9 +525,10 @@ class Igenemy:
                             chrome_driver.find_element_by_css_selector('.ckWGn').click() #click the "x" at the right corner
                             trigger = False
                         except:
-                            print(f'failed {repeater + 1}\n-------------')
+                            print(f'Try Again [{repeater + 1}]\n-------------')
                             repeater += 1
                             if repeater == 3:
+                                print('Failed\n-------------')
                                 break
                                 
                             time.sleep(0.5)
