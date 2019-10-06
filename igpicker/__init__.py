@@ -21,7 +21,7 @@ class IGpicker:
 
     Updated: Hashtag combination, Starting post
     
-    Please follow below instruction to install chrome driver on Colab:
+    Please follow instructions below to install chrome driver on Colab:
     --> !apt install chromium-chromedriver
     --> !cp /usr/lib/chromium-browser/chromedriver /usr/bin
     --> !apt-get update
