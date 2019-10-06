@@ -9,10 +9,10 @@ This is used to scrape images / videos from Instagam by using chrome driver.
 
 By setting those parameters, you can easily scrape either images or videos or both as well as select your designated path to save them.
 
-It will automatically create folders in a location where you stated in 'save_to_path'. Those folders are named by each username and hashtag
+It will automatically create folders in a location where you stated in 'save_to_path'. Those folders are named by each username and hashtag.
 
-Before scrapping, it will inform you to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
-## Please follow instructions below to install chrome driver on Colab
+Before scrapping, you will be informed to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
+## Please follow the instructions below to install chrome driver on Colab
 ```
 !apt install chromium-chromedriver
 !cp /usr/lib/chromium-browser/chromedriver /usr/bin
@@ -31,9 +31,9 @@ pip install igpicker --upgrade
 ## Library used
 selenium, bs4, time, getpass, IPython, urllib, os, re, tqdm, wget, ssl
 ## Reminder
-Sometimes it may not run properly after intensely scrapping. Please wait for a while and start your scrapping journey again.
+Sometimes it may not run properly after an intensive scrapping. Please wait for a while and start your scrapping journey again.
 ## Limitations
-- Only allows scrape either by 'username' or 'hashtag' at the same time (but you can easily change 'target_is_hashtag' parameter after finishing your first scrapping)
+- Only allows scrapping either by 'username' or 'hashtag' at the same time (but you can easily change 'target_is_hashtag' parameter after finishing your first scrapping)
 - Only allows chromedriver
 - Only allows to set the total number of posts you want
 ## Possible function that can be created in the future
@@ -99,7 +99,7 @@ igpicker = IGpicker(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag =
 
 chrome_driver = igpicker.login()
 
-all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10, start_from = 500)
+all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10, start_from = 1)
 
 igpicker.close_driver(chrome_driver) #manually close if 'chromedriver_autoquit' is False
 ```
@@ -128,4 +128,4 @@ igpicker.save_img = True
 
 all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10) 
 ```
-**You can run 'scraper' again after you change the parameters if you didn't close the chrome driver.**
+**You can run 'scraper' again after you change the parameters if you haven't closed the chrome driver.**

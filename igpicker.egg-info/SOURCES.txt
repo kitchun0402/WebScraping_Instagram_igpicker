@@ -1,0 +1,9 @@
+README.md
+setup.py
+igpicker/__init__.py
+igpicker.egg-info/PKG-INFO
+igpicker.egg-info/SOURCES.txt
+igpicker.egg-info/dependency_links.txt
+igpicker.egg-info/not-zip-safe
+igpicker.egg-info/requires.txt
+igpicker.egg-info/top_level.txt
