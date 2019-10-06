@@ -1,4 +1,4 @@
-# WebScraping_Instagram_igpicker
+# WebScraping_Instagram_igpicker <a href="https://pypi.org/project/igpicker/"><img src="https://img.shields.io/pypi/v/igpicker.svg" alt="latest release" />
 **Date for record: 6th October 2019 by Kenneth Hau**
 
 **Renamed the package from igenemy to igpicker**
