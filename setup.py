@@ -12,7 +12,7 @@ setup(
     license = 'MIT',
     zip_safe = False,
     packages=['igenemy'],
-    install_requires = ['selenium>=3.141.0', 'bs4>=0.0.1', 'ipython>=7.8.0', 'wget>=3.2'],
+    install_requires = ['selenium>=3.141.0', 'bs4>=0.0.1', 'ipython>=7.8.0', 'wget>=3.2', 'tqdm>=4.36.1'],
     python_requires = '>= 3',
     long_description=long_description,
     long_description_content_type="text/markdown"

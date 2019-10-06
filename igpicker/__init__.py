@@ -8,22 +8,23 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from IPython.display import Image
+from tqdm import tqdm
 # from urllib.request import urlretrieve
 import os
 import re
 import wget
 import ssl
 
-class Igenemy:
+class IGpicker:
     '''
-    Date for record: 29th September 2019 by Kenneth Hau
+    Date for record: 6th October 2019 by Kenneth Hau
 
-    Updated: It's now available on Google Colab. 
+    Updated: Hashtag combination, Starting post
     
     Please follow below instruction to install chrome driver on Colab:
     --> !apt install chromium-chromedriver
     --> !cp /usr/lib/chromium-browser/chromedriver /usr/bin
-    --> !pip install selenium
+    --> !apt-get update
     --> set the parameter chromedriver_path = 'chromedriver'
     --> set the parameter chrome_headless = True
 
@@ -38,7 +39,7 @@ class Igenemy:
     
     ---------
     Library used:
-    selenium, bs4, time, getpass, IPython, urllib, os, re
+    selenium, bs4, time, getpass, IPython, urllib, os, re, tqdm, wget, ssl
     
     --------- 
     Reminder:
@@ -108,35 +109,45 @@ class Igenemy:
             - manually close the web driver
     
     ---------
-    --> from igenemy import Igenemy
+    --> from igpicker import IGpicker
 
     --> Example 1 (Normal flow):
     
-    igenemy = Igenemy(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag = False, chromedriver_path= './chromedriver',
+    igpicker = IGpicker(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag = False, chromedriver_path= './chromedriver',
                   save_to_path = './', chromedriver_autoquit = False,
                   chrome_headless= True, save_img=True, save_video=False, enable_gpu = False, 
                   ipython_display_image = True)
     
-    chrome_driver = igenemy.login()
+    chrome_driver = igpicker.login()
     
-    all_target = igenemy.scraper(chrome_driver = chrome_driver, num_post = 10)
+    all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10, start_from = 500)
     
-    igenemy.close_driver(chrome_driver) #manually close if 'chromedriver_autoquit' is False
+    igpicker.close_driver(chrome_driver) #manually close if 'chromedriver_autoquit' is False
     
+    --> Example 2 (Hashtag Combination):
 
-    --> Example 2 (Change attributes):
+    igpicker = IGpicker(target = ['pizza'], target_is_hashtag = True, chromedriver_path= 'chromedriver',
+                save_to_path = './', chromedriver_autoquit = False,
+                chrome_headless= True, save_img=True, save_video=True, enable_gpu = False, 
+                ipython_display_image = False)
+
+    chrome_driver = igpicker.login()
+
+    all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10, start_from = 10, hashtag_combination= ['cheesy', 'cheese'])
+
+    --> Example 3 (Change attributes):
     
-    igenemy.save_to_path = '../' #change path
+    igpicker.save_to_path = '../' #change path
     
-    igenemy.target = ['burger', 'hkmusic','pasta'] #change target
+    igpicker.target = ['burger', 'hkmusic','pasta'] #change target
     
-    igenemy.target_is_hashtag = True #is it "hashtag" page?
+    igpicker.target_is_hashtag = True #is it "hashtag" page?
     
-    igenemy.save_video = True
+    igpicker.save_video = True
     
-    igenemy.save_img = True
+    igpicker.save_img = True
     
-    all_target = igenemy.scraper(chrome_driver = chrome_driver, num_post = 10) 
+    all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10) 
     
     #you can run 'scraper' again after you change the parameters if you didn't close the chrome driver.
     
@@ -338,21 +349,45 @@ class Igenemy:
             print('\n[Successfully Login!]')
             sc_check = True
         return sc_check
-            
-    def scraper(self, chrome_driver, num_post = 10):
+
+    def hashtag_combo(self, chrome_driver):
+        WebDriverWait(chrome_driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a.FPmhX.notranslate.nJAzx')))
+        html_changed = chrome_driver.page_source #update page_source after clicking into the post
+        soup_changed = BeautifulSoup(html_changed, "html.parser")
+        account_name = soup_changed.select('a.FPmhX.notranslate.nJAzx')[0].text #the username of the post
+        hashtags_html = soup_changed.find_all(name = 'a', attrs = {'class':'FPmhX notranslate TlrDj'}, text = account_name)
+        combo  = []
+        for hashtag_html in hashtags_html:
+            hashtags = hashtag_html.parent.parent.find('span').text #hashtags found
+            for hashtag in re.findall(r"#[\w\d]+",hashtags): #only with "#"
+                combo.append(hashtag)
+        return combo
+
+
+    def scraper(self, chrome_driver, num_post = 10, start_from = 1, hashtag_combination = []):
         """
         Parameters:
         (1) chrome_driver : Selenium Webdriver
                 - used for web scrapping
                 
-        (2) num_post : int, default: 10
+        (2) num_post : unsigned int, default: 10
                 - the total number of posts you want to scrape
                 - if this number is beyond the actual number of posts, it will stop scrapping automatically
-                
+        (3) start_from: unsigned int, default: 1
+                - the start post of scrapping
+        (4) hashtag_combination: list, default: []
+                - only scrap posts matching all designated hashtags
         """
         ssl._create_default_https_context = ssl._create_unverified_context
-        if type(num_post) != int:
-            raise ValueError("'num_post' must be an integer")
+        if type(num_post) != int or num_post <= 0:
+            raise ValueError("'num_post' must be an unsigned integer counting from 1")
+
+        if type(start_from) != int or start_from <= 0:
+            raise ValueError("'start_from' must be an unsigned integer counting from 1")
+        
+        if type(hashtag_combination) != list:
+            raise ValueError("'hashtag_combination' must be a list")
+
         all_target = []
         for t in self.target: #loop thru each url
             if self.target_is_hashtag:
@@ -369,11 +404,12 @@ class Igenemy:
             if not os.path.exists(f'{self.save_to_path}/{t}'):
                 os.mkdir(f'{self.save_to_path}/{t}') #create new directory according to the username or tag name
             checker = []
+            non_match = 0 #number of posts not matching hashtag combination
             start_post = 1
             while True:
                 WebDriverWait(chrome_driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.Nnq7C div.v1Nh3.kIKUG._bz0w div._9AhH0')))
                 posts = chrome_driver.find_elements_by_css_selector('.Nnq7C div.v1Nh3.kIKUG._bz0w div._9AhH0') #(find the frame) return a list, show each post
-                
+                post_indicators = chrome_driver.find_elements_by_css_selector('.Nnq7C div.v1Nh3.kIKUG._bz0w a') 
                 end_post = len(posts)
                 print(f'\n-------------\n[Target: {t}]\n-------------\n')
                 time.sleep(1)
@@ -383,17 +419,25 @@ class Igenemy:
                 html_changed_for_checking = chrome_driver.page_source #check if we ara at the bottom of the page. Then, stop scraping
                 chrome_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)") #scroll down the page
                 time.sleep(1.5)
+        
 
-                for post in range(0, len(posts)): #must be started from 0 due to IG structure
-            #         print(print(posts[post]))
-                    if posts[post] not in checker:
+                for post in tqdm(range(0, len(posts))): #must be started from 0 due to IG structure
+                    try:
+                        post_indicator = post_indicators[post].get_attribute('href') #look for hyperlink for each post
+                    except:
+                        continue
+                    if  post_indicator not in checker: #make sure there is no repeat
+                        
                         repeater=0
                         trigger = True #prevent the driver from not loading the page source successfully
 
                         while trigger == True:
                             try:
+                                checker.append(post_indicator)
+                                if len(checker) < start_from:
+                                    print(f"--------\n[Skipped Post: {len(checker)}]")
+                                    break #start_from
                                 posts[post].click() #go into a post
-                                checker.append(posts[post])
                                 trigger = False
                             except:
                                 print(f'Try Again [{repeater + 1}]\n-------------')
@@ -404,15 +448,35 @@ class Igenemy:
                                 time.sleep(0.3)
                                 html_changed = chrome_driver.page_source #load the page source again
                                 soup_changed = BeautifulSoup(html_changed, "html.parser")
-                                
+                        
                     else:
                         continue #skip the post that already existed
+
+                    if len(checker) < start_from:
+                        continue #start_from
+
 
                     time.sleep(0.5)
                     html_changed = chrome_driver.page_source #update page_source after clicking into the post
                     soup_changed = BeautifulSoup(html_changed, "html.parser")
                     print(f"--------\n[Post: {len(checker)}]")
-
+                    
+                    
+                    if hashtag_combination != [] and self.target_is_hashtag == True:
+                        combo = self.hashtag_combo(chrome_driver)
+                        flag = []
+                        for target_hashtag in hashtag_combination:
+                            if '#' + target_hashtag in combo:
+                                flag.append(True)
+                            else:
+                                flag.append(False)
+                       
+                        if all(flag) != True:
+                            print('\n[Hashtag combination is not found!]')
+                            chrome_driver.find_element_by_css_selector('.ckWGn').click() #click the "x" at the right corner
+                            non_match += 1
+                            continue
+                    
                     repeater=0
                     trigger = True #prevent the driver from not loading the page source successfully
                     while trigger == True:
@@ -431,7 +495,7 @@ class Igenemy:
                             html_changed = chrome_driver.page_source #load the page source again
                             soup_changed = BeautifulSoup(html_changed, "html.parser")
                             
-
+                            
                     posttime = posttime.replace(':', '_') #replace : to _, so that the image can be saved
                     if soup_changed.select('._97aPb .YlNGR li') != []: #if more than 1 pics,  there are 'li' tags
                         print('More than 1 items')
@@ -537,11 +601,11 @@ class Igenemy:
                             
 
 
-                    if len(checker) == num_post: #limit to 50 posts, break for loop
+                    if (len(checker) - non_match) == (num_post + start_from - 1): #limit to 'num_post', break for loop
                         break
 
-                if len(checker) == num_post: #break while loop
-                    print(f"Finished: {len(checker)} post(s)")
+                if (len(checker) - non_match) == (num_post + start_from - 1): #break while loop
+                    print(f"Finished: {(num_post + start_from - 1)} post(s)")
                     break
 
 
@@ -554,6 +618,7 @@ class Igenemy:
                 
                 if html_changed == html_changed_for_checking:
                     print(f"Last Post: {len(checker)}")
+                    print(f"Finished: {(len(checker) - non_match - start_from + 1)} post(s)")
                     break
                 soup_changed = BeautifulSoup(html_changed, "html.parser")
             

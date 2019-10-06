@@ -1,15 +1,16 @@
-# WebScraping_Instagram_igenemy   
-Date for record: 29th September 2019 by Kenneth Hau
+# WebScraping_Instagram_igpicker
+    **Date for record: 6th October 2019 by Kenneth Hau**
 
-    Updated: It's now available on Google Colab. 
+    Updated: Hashtag combination, Starting post
     
-    Please follow below instruction to install chrome driver on Colab:
-    --> !apt install chromium-chromedriver
-    --> !cp /usr/lib/chromium-browser/chromedriver /usr/bin
-    --> !pip install selenium
-    --> set the parameter chromedriver_path = 'chromedriver'
-    --> set the parameter chrome_headless = True
-
+    Please follow below instruction to install chrome driver on Colab
+    ```
+    !apt install chromium-chromedriver
+    !cp /usr/lib/chromium-browser/chromedriver /usr/bin
+    !apt-get update
+    chromedriver_path = 'chromedriver'
+    chrome_headless = True
+    ```
     ---------
     This is used to scrape images / videos from Instagam by using chrome driver.
     
@@ -20,26 +21,38 @@ Date for record: 29th September 2019 by Kenneth Hau
     Before scrapping, it will inform you to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
     
     ---------
-    Library used:
-    selenium, bs4, time, getpass, IPython, urllib, os, re
+    ## Install
+    ```
+    pip install igpicker
+    ```
+
+    ---------
+    ## Upgrade
+    ```
+    pip install igpicker --upgrade
+    ```
+
+    ---------
+    ## Library used
+    selenium, bs4, time, getpass, IPython, urllib, os, re, tqdm, wget, ssl
     
     --------- 
-    Reminder:
+    ## Reminder
     Sometimes it may not run properly after intensely scrapping. Please wait for a while and start your scrapping journey again.
     
     ---------
-    Limitations:
+    ## Limitations
     - Only allows scrape either by 'username' or 'hashtag' at the same time (but you can easily change 'target_is_hashtag' parameter after finishing your first scrapping)
     - Only allows chromedriver
     - Only allows to set the total number of posts you want
     
     ---------    
-    Possible function that can be created in the future:
+    ## Possible function that can be created in the future
     Store each post's information (e.g. like, post time, post location, post description, users' number of followers, etc.) into dataframes, or even consolidate them into databases. Therefore, they can be used to do descriptive analysis, train up machine learning models or build up a recommendation system.
     
     
     ---------    
-    Parameters & Attributes:
+    ## Parameters & Attributes
     (1) target : A list of string(s), default: []
             - either target username(s) or hashtag(s), if they are hashtags, 'target_is_hashtag' must be set to True
             
@@ -74,7 +87,7 @@ Date for record: 29th September 2019 by Kenneth Hau
             - if you set True when using terminal to display, it will fail to scrape images
     
     ---------  
-    Methods:
+    ## Methods
     (1) login : no parameter is required, return chrome_driver
             - used to access Instagram
             
@@ -91,35 +104,49 @@ Date for record: 29th September 2019 by Kenneth Hau
             - manually close the web driver
     
     ---------
-    --> from igenemy import Igenemy
+    ```
+    from igpicker import IGpicker
+    ```
 
     --> Example 1 (Normal flow):
-    
-    from igenemy import Igenemy
-    igenemy = Igenemy(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag = False, chromedriver_path= './chromedriver',
+    ```
+    igpicker = IGpicker(target = ['hkfoodtalk', 'sportscenter'], target_is_hashtag = False, chromedriver_path= './chromedriver',
                   save_to_path = './', chromedriver_autoquit = False,
                   chrome_headless= True, save_img=True, save_video=False, enable_gpu = False, 
                   ipython_display_image = True)
     
-    chrome_driver = igenemy.login()
+    chrome_driver = igpicker.login()
     
-    all_target = igenemy.scraper(chrome_driver = chrome_driver, num_post = 10)
+    all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10, start_from = 500)
     
-    igenemy.close_driver(chrome_driver) #manually close if 'chromedriver_autoquit' is False
-    
+    igpicker.close_driver(chrome_driver) #manually close if 'chromedriver_autoquit' is False
+    ```
 
-    --> Example 2 (Change attributes):
+    --> Example 2 (Hashtag Combination):
+    ```
+    igpicker = IGpicker(target = ['pizza'], target_is_hashtag = True, chromedriver_path= 'chromedriver',
+                save_to_path = './', chromedriver_autoquit = False,
+                chrome_headless= True, save_img=True, save_video=True, enable_gpu = False, 
+                ipython_display_image = False)
+
+    chrome_driver = igpicker.login()
+
+    all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10, start_from = 10, hashtag_combination= ['cheesy', 'cheese'])
+    ```
+
+    --> Example 3 (Change attributes):
+    ```
+    igpicker.save_to_path = '../' #change path
     
-    igenemy.save_to_path = '../' #change path
+    igpicker.target = ['burger', 'hkmusic','pasta'] #change target
     
-    igenemy.target = ['burger', 'hkmusic','pasta'] #change target
+    igpicker.target_is_hashtag = True #is it "hashtag" page?
     
-    igenemy.target_is_hashtag = True #is it "hashtag" page?
+    igpicker.save_video = True
     
-    igenemy.save_video = True
+    igpicker.save_img = True
     
-    igenemy.save_img = True
-    
-    all_target = igenemy.scraper(chrome_driver = chrome_driver, num_post = 10) 
+    all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10) 
     
     #you can run 'scraper' again after you change the parameters if you didn't close the chrome driver.
+    ```
