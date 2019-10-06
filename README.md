@@ -4,7 +4,6 @@
 **Renamed the package from igenemy to igpicker**
 
 **Updated: Hashtag combination, Starting post**
-
 ## About
 This is used to scrape images / videos from Instagam by using chrome driver.
 
@@ -13,7 +12,6 @@ By setting those parameters, you can easily scrape either images or videos or bo
 It will automatically create folders in a location where you stated in 'save_to_path'. Those folders are named by each username and hashtag
 
 Before scrapping, it will inform you to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
-    
 ## Please follow instructions below to install chrome driver on Colab
 ```
 !apt install chromium-chromedriver
@@ -88,7 +86,6 @@ Store each post's information (e.g. like, post time, post location, post descrip
 
 (3) close_driver : one parameters (chrome_driver)
    - manually close the web driver
-   
 ## Import Library
 ```
 from igpicker import IGpicker
@@ -130,6 +127,5 @@ igpicker.save_video = True
 igpicker.save_img = True
 
 all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10) 
-
 ```
 **You can run 'scraper' again after you change the parameters if you didn't close the chrome driver.**
