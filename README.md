@@ -1,6 +1,8 @@
 # WebScraping_Instagram_igpicker
 **Date for record: 6th October 2019 by Kenneth Hau**
 
+**Renamed the package from igenemy to igpicker**
+
 **Updated: Hashtag combination, Starting post**
 
 ## About
