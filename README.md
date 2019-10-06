@@ -14,7 +14,7 @@ It will automatically create folders in a location where you stated in 'save_to_
 
 Before scrapping, it will inform you to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
     
-## Please follow below instructions to install chrome driver on Colab
+## Please follow instructions below to install chrome driver on Colab
 ```
 !apt install chromium-chromedriver
 !cp /usr/lib/chromium-browser/chromedriver /usr/bin
