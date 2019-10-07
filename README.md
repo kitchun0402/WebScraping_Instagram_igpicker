@@ -79,9 +79,10 @@ Store each post's information (e.g. like, post time, post location, post descrip
 
 **(2) scraper** : two parameters (chrome_driver, num_post), return a list of all targeted url
 
+```
 (a) chrome_driver : Selenium Webdriver
    - used for web scrapping
-
+   
 (b) num_post : int, default: 10
    - the total number of posts you want to scrape
    - if this number is beyond the actual number of posts, it will stop scrapping automatically
@@ -91,6 +92,7 @@ Store each post's information (e.g. like, post time, post location, post descrip
 
 (d) hashtag_combination: list, default: []
    - only scrap posts matching all designated hashtags
+```
 
 **(3) close_driver** : one parameters (chrome_driver)
    - manually close the web driver
