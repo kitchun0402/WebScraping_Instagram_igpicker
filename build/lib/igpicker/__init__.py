@@ -104,6 +104,12 @@ class IGpicker:
         (b) num_post : int, default: 10
             - the total number of posts you want to scrape
             - if this number is beyond the actual number of posts, it will stop scrapping automatically
+
+        (c) start_from: unsigned int, default: 1
+                - the start post of scrapping
+
+        (d) hashtag_combination: list, default: []
+                - only scrap posts matching all designated hashtags
             
     (3) close_driver : one parameters (chrome_driver)
             - manually close the web driver
@@ -120,7 +126,7 @@ class IGpicker:
     
     chrome_driver = igpicker.login()
     
-    all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10, start_from = 500)
+    all_target = igpicker.scraper(chrome_driver = chrome_driver, num_post = 10, start_from = 1)
     
     igpicker.close_driver(chrome_driver) #manually close if 'chromedriver_autoquit' is False
     
@@ -351,7 +357,7 @@ class IGpicker:
         return sc_check
 
     def hashtag_combo(self, chrome_driver):
-        WebDriverWait(chrome_driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a.FPmhX.notranslate.nJAzx')))
+        WebDriverWait(chrome_driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a.FPmhX.notranslate.nJAzx')))
         html_changed = chrome_driver.page_source #update page_source after clicking into the post
         soup_changed = BeautifulSoup(html_changed, "html.parser")
         account_name = soup_changed.select('a.FPmhX.notranslate.nJAzx')[0].text #the username of the post
@@ -360,7 +366,7 @@ class IGpicker:
         for hashtag_html in hashtags_html:
             hashtags = hashtag_html.parent.parent.find('span').text #hashtags found
             for hashtag in re.findall(r"#[\w\d]+",hashtags): #only with "#"
-                combo.append(hashtag)
+                combo.append(hashtag.lower())
         return combo
 
 
@@ -407,7 +413,7 @@ class IGpicker:
             non_match = 0 #number of posts not matching hashtag combination
             start_post = 1
             while True:
-                WebDriverWait(chrome_driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.Nnq7C div.v1Nh3.kIKUG._bz0w div._9AhH0')))
+                WebDriverWait(chrome_driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.Nnq7C div.v1Nh3.kIKUG._bz0w div._9AhH0')))
                 posts = chrome_driver.find_elements_by_css_selector('.Nnq7C div.v1Nh3.kIKUG._bz0w div._9AhH0') #(find the frame) return a list, show each post
                 post_indicators = chrome_driver.find_elements_by_css_selector('.Nnq7C div.v1Nh3.kIKUG._bz0w a') 
                 end_post = len(posts)
@@ -460,22 +466,33 @@ class IGpicker:
                     html_changed = chrome_driver.page_source #update page_source after clicking into the post
                     soup_changed = BeautifulSoup(html_changed, "html.parser")
                     print(f"--------\n[Post: {len(checker)}]")
-                    
-                    
+
+
                     if hashtag_combination != [] and self.target_is_hashtag == True:
-                        combo = self.hashtag_combo(chrome_driver)
-                        flag = []
-                        for target_hashtag in hashtag_combination:
-                            if '#' + target_hashtag in combo:
-                                flag.append(True)
-                            else:
-                                flag.append(False)
-                       
-                        if all(flag) != True:
-                            print('\n[Hashtag combination is not found!]')
+                        try:
+                            combo = self.hashtag_combo(chrome_driver)
+                            flag = []
+                            for target_hashtag in hashtag_combination:
+                                if '#' + target_hashtag.lower() in combo:
+                                    flag.append(True)
+                                else:
+                                    flag.append(False)
+
+                            if all(flag) != True:
+                                print('\n[Hashtag combination is not found!]')
+                                chrome_driver.find_element_by_css_selector('.ckWGn').click() #click the "x" at the right corner
+                                non_match += 1
+                                continue
+                        except:
+                            print('\n[HTML tag is not found]')
                             chrome_driver.find_element_by_css_selector('.ckWGn').click() #click the "x" at the right corner
                             non_match += 1
-                            continue
+                            chrome_driver.refresh()
+                            time.sleep(1.5)
+                            html_ = chrome_driver.page_source
+                            soup = BeautifulSoup(html_, 'html.parser')
+                            break
+                    
                     
                     repeater=0
                     trigger = True #prevent the driver from not loading the page source successfully
@@ -605,7 +622,7 @@ class IGpicker:
                         break
 
                 if (len(checker) - non_match) == (num_post + start_from - 1): #break while loop
-                    print(f"Finished: {(num_post + start_from - 1)} post(s)")
+                    print(f"Finished: {(num_post)} post(s)")
                     break
 
 

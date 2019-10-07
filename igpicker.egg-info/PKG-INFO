@@ -1,12 +1,14 @@
 Metadata-Version: 2.1
 Name: igpicker
-Version: 0.4.1
+Version: 0.4.3
 Summary: WebScraping_Instagram
 Home-page: https://github.com/kitchun0402/WebScraping_Instagram_igpicker
 Author: Kenneth Hau
 Author-email: kitchun0402@gmail.com
 License: MIT
-Description: # WebScraping_Instagram_igpicker
+Description: # WebScraping_Instagram_igpicker <a href="https://pypi.org/project/igpicker/"><img src="https://img.shields.io/pypi/v/igpicker.svg" alt="latest release" /></a>
+        
+           
         **Date for record: 6th October 2019 by Kenneth Hau**
         
         **Renamed the package from igenemy to igpicker**
@@ -47,52 +49,60 @@ Description: # WebScraping_Instagram_igpicker
         ## Possible function that can be created in the future
         Store each post's information (e.g. like, post time, post location, post description, users' number of followers, etc.) into dataframes, or even consolidate them into databases. Therefore, they can be used to do descriptive analysis, train up machine learning models or build up a recommendation system.  
         ## Parameters & Attributes
-        (1) target : A list of string(s), default: []
+        **(1) target** : A list of string(s), default: []
            - either target username(s) or hashtag(s), if they are hashtags, 'target_is_hashtag' must be set to True
         
-        (2) target_is_hashtag : Boolean, default: False
+        **(2) target_is_hashtag** : Boolean, default: False
            - True: you want to scrape by using hashtags
         
-        (3) chromedriver_path : String, default: './chromedriver'
+        **(3) chromedriver_path** : String, default: './chromedriver'
            - a path of your chrome driver, you should name your driver as 'chromedrive'
         
-        (4) save_to_path : String, default: '.'
+        **(4) save_to_path** : String, default: '.'
            - a path where the image(s) / video(s) will be saved into
         
-        (5) chromedriver_autoquit : Boolean, default: True
+        **(5) chromedriver_autoquit** : Boolean, default: True
            - True: automatically quit the driver after finishing the scrapping
            - if you don't want it, you can quit the driver manually by using a build-in function called 'close_driver'
         
-        (6) chrome_headless : Boolean, default: True
+        **(6) chrome_headless** : Boolean, default: True
            - True: run chrome driver in the backend
            - if you want to see how the chrome driver works, you can set it to False
         
-        (7) save_img : Boolean, default: True
+        **(7) save_img** : Boolean, default: True
            - True: save images
         
-        (8) save_video : Boolean, default: False
+        **(8) save_video** : Boolean, default: False
            - True: save videos      
         
-        (9) enable_gpu : Boolean, default: False
+        **(9) enable_gpu** : Boolean, default: False
            - True: enable gpu in chrome driver
         
-        (10) ipython_display_image : Boolean, default: False
+        **(10) ipython_display_image** : Boolean, default: False
            - True: display images, only works in notebook but not terminal
            - if you set True when using terminal to display, it will fail to scrape images
         ## Methods
-        (1) login : no parameter is required, return chrome_driver
+        **(1) login** : no parameter is required, return chrome_driver
            - used to access Instagram
         
-        (2) scraper : two parameters (chrome_driver, num_post), return a list of all targeted url
+        **(2) scraper** : two parameters (chrome_driver, num_post), return a list of all targeted url
         
+        ```
         (a) chrome_driver : Selenium Webdriver
            - used for web scrapping
-        
+           
         (b) num_post : int, default: 10
            - the total number of posts you want to scrape
            - if this number is beyond the actual number of posts, it will stop scrapping automatically
+           
+        (c) start_from: unsigned int, default: 1
+           - the start post of scrapping
         
-        (3) close_driver : one parameters (chrome_driver)
+        (d) hashtag_combination: list, default: []
+           - only scrap posts matching all designated hashtags
+        ```
+        
+        **(3) close_driver** : one parameters (chrome_driver)
            - manually close the web driver
         ## Import Library
         ```
