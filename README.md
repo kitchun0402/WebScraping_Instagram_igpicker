@@ -85,6 +85,12 @@ Store each post's information (e.g. like, post time, post location, post descrip
 (b) num_post : int, default: 10
    - the total number of posts you want to scrape
    - if this number is beyond the actual number of posts, it will stop scrapping automatically
+   
+(c) start_from: unsigned int, default: 1
+   - the start post of scrapping
+
+(d) hashtag_combination: list, default: []
+   - only scrap posts matching all designated hashtags
 
 (3) close_driver : one parameters (chrome_driver)
    - manually close the web driver
