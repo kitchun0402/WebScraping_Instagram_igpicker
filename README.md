@@ -13,7 +13,7 @@ By setting those parameters, you can easily scrape either images or videos or bo
 
 It will automatically create folders in a location where you stated in 'save_to_path'. Those folders are named by each username and hashtag.
 
-Before scraping, you will be informed to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
+Before scraping, you will be informed to login your IG account in order to smoothen the scraping process. Don't worry, it wouldn't store your username and password.
 ## Please follow the instructions below to install chrome driver on Colab
 ```
 !apt install chromium-chromedriver
@@ -54,7 +54,7 @@ Store each post's information (e.g. like, post time, post location, post descrip
    - a path where the image(s) / video(s) will be saved into
 
 **(5) chromedriver_autoquit** : Boolean, default: True
-   - True: automatically quit the driver after finishing the scrapping
+   - True: automatically quit the driver after finishing the scraping
    - if you don't want it, you can quit the driver manually by using a build-in function called 'close_driver'
 
 **(6) chrome_headless** : Boolean, default: True
@@ -81,14 +81,14 @@ Store each post's information (e.g. like, post time, post location, post descrip
 
 ```
 (a) chrome_driver : Selenium Webdriver
-   - used for web scrapping
+   - used for web scraping
    
 (b) num_post : int, default: 10
    - the total number of posts you want to scrape
-   - if this number is beyond the actual number of posts, it will stop scrapping automatically
+   - if this number is beyond the actual number of posts, it will stop scraping automatically
    
 (c) start_from: unsigned int, default: 1
-   - the start post of scrapping
+   - the start post of scraping
 
 (d) hashtag_combination: list, default: []
    - only scrap posts matching all designated hashtags
