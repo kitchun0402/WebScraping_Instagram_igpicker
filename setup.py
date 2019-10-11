@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='igpicker',  
-    version='0.4.3',
+    version='0.4.4',
     author="Kenneth Hau",
     author_email="kitchun0402@gmail.com",
     description="WebScraping_Instagram",

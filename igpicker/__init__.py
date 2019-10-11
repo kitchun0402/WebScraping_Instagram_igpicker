@@ -35,7 +35,7 @@ class IGpicker:
     
     It will automatically create folders in a location where you stated in 'save_to_path'. Those folders are named by each username and hashtag.
     
-    Before scrapping, you will be informed to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
+    Before scraping, you will be informed to login your IG account in order to smoothen the scraping process. Don't worry, it wouldn't store your username and password.
     
     ---------
     Library used:
@@ -43,11 +43,11 @@ class IGpicker:
     
     --------- 
     Reminder:
-    Sometimes it may not run properly after an intensive scrapping. Please wait for a while and start your scrapping journey again.
+    Sometimes it may not run properly after an intensive scraping. Please wait for a while and start your scraping journey again.
     
     ---------
     Limitations:
-    - Only allows scrapping either by 'username' or 'hashtag' at the same time (but you can easily change 'target_is_hashtag' parameter after finishing your first scrapping)
+    - Only allows scraping either by 'username' or 'hashtag' at the same time (but you can easily change 'target_is_hashtag' parameter after finishing your first scraping)
     - Only allows chromedriver
     - Only allows to set the total number of posts you want
     
@@ -71,7 +71,7 @@ class IGpicker:
             - a path where the image(s) / video(s) will be saved into
     
     (5) chromedriver_autoquit : Boolean, default: True
-            - True: automatically quit the driver after finishing the scrapping
+            - True: automatically quit the driver after finishing the scraping
             - if you don't want it, you can quit the driver manually by using a build-in function called 'close_driver'
     
     (6) chrome_headless : Boolean, default: True
@@ -99,14 +99,14 @@ class IGpicker:
     (2) scraper : two parameters (chrome_driver, num_post), return a list of all targeted url
     
         (a) chrome_driver : Selenium Webdriver
-            - used for web scrapping
+            - used for web scraping
 
         (b) num_post : int, default: 10
             - the total number of posts you want to scrape
-            - if this number is beyond the actual number of posts, it will stop scrapping automatically
+            - if this number is beyond the actual number of posts, it will stop scraping automatically
 
         (c) start_from: unsigned int, default: 1
-                - the start post of scrapping
+                - the start post of scraping
 
         (d) hashtag_combination: list, default: []
                 - only scrap posts matching all designated hashtags
@@ -374,13 +374,13 @@ class IGpicker:
         """
         Parameters:
         (1) chrome_driver : Selenium Webdriver
-                - used for web scrapping
+                - used for web scraping
                 
         (2) num_post : unsigned int, default: 10
                 - the total number of posts you want to scrape
-                - if this number is beyond the actual number of posts, it will stop scrapping automatically
+                - if this number is beyond the actual number of posts, it will stop scraping automatically
         (3) start_from: unsigned int, default: 1
-                - the start post of scrapping
+                - the start post of scraping
         (4) hashtag_combination: list, default: []
                 - only scrap posts matching all designated hashtags
         """
