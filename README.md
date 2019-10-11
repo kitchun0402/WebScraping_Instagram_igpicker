@@ -13,7 +13,7 @@ By setting those parameters, you can easily scrape either images or videos or bo
 
 It will automatically create folders in a location where you stated in 'save_to_path'. Those folders are named by each username and hashtag.
 
-Before scrapping, you will be informed to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
+Before scraping, you will be informed to login your IG account in order to smoothen the scrapping process. Don't worry, it wouldn't store your username and password.
 ## Please follow the instructions below to install chrome driver on Colab
 ```
 !apt install chromium-chromedriver
@@ -33,9 +33,9 @@ pip install igpicker --upgrade
 ## Library used
 selenium, bs4, time, getpass, IPython, urllib, os, re, tqdm, wget, ssl
 ## Reminder
-Sometimes it may not run properly after an intensive scrapping. Please wait for a while and start your scrapping journey again.
+Sometimes it may not run properly after an intensive scraping. Please wait for a while and start your scraping journey again.
 ## Limitations
-- Only allows scrapping either by 'username' or 'hashtag' at the same time (but you can easily change 'target_is_hashtag' parameter after finishing your first scrapping)
+- Only allows scraping either by 'username' or 'hashtag' at the same time (but you can easily change 'target_is_hashtag' parameter after finishing your first scraping)
 - Only allows chromedriver
 - Only allows to set the total number of posts you want
 ## Possible function that can be created in the future
